@@ -1,0 +1,22 @@
+name: 'Setup'
+description: 'Setup dev environment for tinytune dev'
+inputs:
+  go-version:
+    description: "Golang version"
+    required: true
+    default: '1.24.1'
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Go ${{ inputs.go-version }}
+      uses: actions/setup-go@v5
+      with:
+        go-version: ${{ inputs.go-version }}
+    - name: Display Go version
+      run: go version
+      shell: bash
+    - name: Install golangci-lint
+      shell: bash
+      run: |
+        curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin
+        golangci-lint --version

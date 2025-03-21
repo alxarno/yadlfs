@@ -1,0 +1,38 @@
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+permissions:
+  contents: write
+  pull-requests: write
+  
+name: Release
+  
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: googleapis/release-please-action@v4
+        id: release
+        with:
+          release-type: simple
+          target-branch: ${{ github.ref_name }}
+      - uses: ./.github/actions/setup
+        if: ${{ steps.release.outputs.release_created }}
+        with:
+          go-version: "1.24.1"
+      - name: Build
+        if: ${{ steps.release.outputs.release_created }}
+        run: |
+          make VERSION="${{ steps.release.outputs.tag_name }}" build
+      - name: Upload Release Artifact
+        if: ${{ steps.release.outputs.release_created }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release upload ${{ steps.release.outputs.tag_name }} ./build/yadlfs_linux_amd64
+          gh release delete latest
+          gh release create latest --title latest --notes "[${{ steps.release.outputs.tag_name }}](https://github.com/alxarno/tinytune/releases/tag/${{ steps.release.outputs.tag_name }})"
+          gh release upload latest ./build/yadlfs_linux_amd64

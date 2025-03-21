@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/alxarno/yadlfs/compare/v1.0.0...v1.0.1) (2025-03-21)
+
+
+### Bug Fixes
+
+* build process ([dfc5bcc](https://github.com/alxarno/yadlfs/commit/dfc5bccbffe2ce99f4e872f14cb3548f0319328f))
+
 ## 1.0.0 (2025-03-21)
 
 

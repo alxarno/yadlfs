@@ -34,5 +34,5 @@ jobs:
         run: |
           gh release upload ${{ steps.release.outputs.tag_name }} ./build/yadlfs_linux_amd64
           gh release delete latest
-          gh release create latest --title latest --notes "[${{ steps.release.outputs.tag_name }}](https://github.com/alxarno/tinytune/releases/tag/${{ steps.release.outputs.tag_name }})"
+          gh release create latest --title latest --notes "[${{ steps.release.outputs.tag_name }}](https://github.com/alxarno/yadlfs/releases/tag/${{ steps.release.outputs.tag_name }})"
           gh release upload latest ./build/yadlfs_linux_amd64

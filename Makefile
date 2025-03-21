@@ -1,6 +1,6 @@
 .PHONY: test lint quality fmt
 
-BINARY_NAME=yadfls
+BINARY_NAME=yadlfs
 VERSION=0.0.1
 
 COMMIT_HASH=$(shell git rev-parse --short HEAD)
